@@ -36,6 +36,36 @@ In your `flake.nix`:
 
 Run with: `nix run .#my-app-sandboxed`
 
+## Examples
+
+### Claude Code
+
+Sandbox [Claude Code](https://claude.ai/code) with access to project directory, config files, and network:
+
+```nix
+landrunApps.claude-sandboxed = {
+  program = lib.getExe pkgs.claude-code;
+  features = {
+    tty = true;
+    nix = true;
+    network = true;
+  };
+  cli = {
+    rw = [
+      "$HOME/.claude"
+      "$HOME/.claude.json"
+      "$HOME/.config/gcloud"
+    ];
+    rwx = [ "." ];
+    env = [
+      "HOME"  # Needed for gcloud and claude to resolve ~/ paths for config/state files
+    ];
+  };
+};
+```
+
+Run with: `nix run .#claude-sandboxed`
+
 ## Features
 
 High-level feature flags automatically configure common sandboxing patterns:
