@@ -1,10 +1,10 @@
 # landrun-nix
 
-Flake-parts module for wrapping programs with [landrun](https://github.com/landlock-lsm/landrun) sandbox.
+A Nix flake-parts module for wrapping programs with [landrun](https://github.com/Zouuup/landrun) (Landlock) sandbox.
 
 ## Usage
 
-Add to your flake inputs:
+In your `flake.nix`:
 
 ```nix
 {
@@ -23,6 +23,7 @@ Add to your flake inputs:
             network = true;  # Network access
             tmp = true;      # /tmp access (default)
           };
+          # Raw arguments to pass to `landrun` CLI
           cli = {
             rw = [ "$HOME/.config/my-app" ];
             rox = [ "/etc/hosts" ];
