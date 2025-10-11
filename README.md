@@ -1,3 +1,5 @@
+[![GitHub Discussions](https://img.shields.io/github/discussions/srid/landrun-nix)](https://github.com/srid/landrun-nix/discussions)
+
 # landrun-nix
 
 A Nix flake-parts module for wrapping programs with [landrun](https://github.com/Zouuup/landrun) (Landlock) sandbox.
@@ -106,6 +108,10 @@ Fine-grained control via `cli.*`:
 | `env` | Environment variables to pass through |
 | `unrestrictedNetwork` | Allow all network access |
 | `addExec` | Auto-add executable to rox (default: true) |
+
+## Discussions
+
+https://github.com/srid/landrun-nix/discussions
 
 ## License
 
