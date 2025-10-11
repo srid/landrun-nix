@@ -42,33 +42,13 @@ Run with: `nix run .#my-app-sandboxed`
 
 Sandbox [Claude Code](https://claude.ai/code) with access to project directory, config files, and network.
 
-See [examples/claude-sandboxed](./examples/claude-sandboxed) for a complete working example.
+See [examples/claude-sandboxed](./examples/claude-sandboxed/flake.nix) for a complete working example.
 
-Try it: `nix run github:srid/landrun-nix?dir=examples/claude-sandboxed`
+Try it: 
 
-```nix
-landrunApps.claude-sandboxed = {
-  program = lib.getExe pkgs.claude-code;
-  features = {
-    tty = true;
-    nix = true;
-    network = true;
-  };
-  cli = {
-    rw = [
-      "$HOME/.claude"
-      "$HOME/.claude.json"
-      "$HOME/.config/gcloud"
-    ];
-    rwx = [ "." ];
-    env = [
-      "HOME"  # Needed for gcloud and claude to resolve ~/ paths for config/state files
-    ];
-  };
-};
+```sh
+nix run github:srid/landrun-nix?dir=examples/claude-sandboxed
 ```
-
-Run with: `nix run .#claude-sandboxed`
 
 ## Features
 
