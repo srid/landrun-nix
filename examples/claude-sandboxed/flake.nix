@@ -28,10 +28,13 @@
             rw = [
               "$HOME/.claude"
               "$HOME/.claude.json"
+              "$HOME/.config/gcloud"
             ];
             rwx = [ "." ];
             env = [
               "HOME" # Needed for gcloud and claude to resolve ~/ paths for config/state files
+              "CLAUDE_CODE_USE_VERTEX"
+              "ANTHROPIC_MODEL"
             ];
           };
         };
