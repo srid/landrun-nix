@@ -7,39 +7,35 @@
 
   outputs = inputs@{ flake-parts, landrun-nix, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ landrun-nix.flakeModule ];
-
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
 
-      perSystem = { system, ... }:
-        let
-          pkgs = import inputs.nixpkgs {
-            inherit system;
-            config.allowUnfree = true;
-          };
-        in
-        {
-          _module.args.pkgs = pkgs;
+      imports = [ landrun-nix.flakeModule ];
 
-          landrunApps.default = {
-            program = "${pkgs.claude-code}/bin/claude";
-            features = {
-              tty = true;
-              nix = true;
-              network = true;
-            };
-            cli = {
-              rw = [
-                "$HOME/.claude"
-                "$HOME/.claude.json"
-                "$HOME/.config/gcloud"
-              ];
-              rwx = [ "." ];
-              env = [
-                "HOME" # Needed for gcloud and claude to resolve ~/ paths for config/state files
-              ];
-            };
+      perSystem = { pkgs, system, ... }: {
+        _module.args.pkgs = import inputs.nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
+        };
+
+        landrunApps.default = {
+          program = "${pkgs.claude-code}/bin/claude";
+          features = {
+            tty = true;
+            nix = true;
+            network = true;
+          };
+          cli = {
+            rw = [
+              "$HOME/.claude"
+              "$HOME/.claude.json"
+              "$HOME/.config/gcloud"
+            ];
+            rwx = [ "." ];
+            env = [
+              "HOME" # Needed for gcloud and claude to resolve ~/ paths for config/state files
+            ];
           };
         };
+      };
     };
 }
