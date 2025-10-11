@@ -21,5 +21,7 @@ jobs:
 
       - name: Test claude-sandboxed with --help
         run: |
+          mkdir ~/.claude
+          touch ~/.claude.json
           cd examples/claude-sandboxed
           nix run --override-input landrun-nix ../.. . -- --help

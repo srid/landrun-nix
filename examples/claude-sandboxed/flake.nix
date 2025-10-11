@@ -28,7 +28,6 @@
             rw = [
               "$HOME/.claude"
               "$HOME/.claude.json"
-              "$HOME/.config/gcloud"
             ];
             rwx = [ "." ];
             env = [
