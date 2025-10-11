@@ -22,7 +22,7 @@
           _module.args.pkgs = pkgs;
 
           landrunApps.default = {
-            program = pkgs.claude-code;
+            program = "${pkgs.claude-code}/bin/claude";
           features = {
             tty = true;
             nix = true;
