@@ -1,0 +1,4 @@
+
+## Building
+
+Run `om ci`

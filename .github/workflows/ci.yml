@@ -14,8 +14,8 @@ jobs:
 
       - uses: nixbuild/nix-quick-install-action@v33
 
-      - name: Build claude-sandboxed example
-        run: |
-          cd examples/claude-sandboxed
-          nix build --override-input landrun-nix ../..
+      - run: nix profile install nixpkgs#omnix
+
+      - name: Build
+        run: om ci
 
