@@ -156,13 +156,24 @@ in
                 # Nix support
                 (lib.mkIf config.features.nix {
                   rox = [
-                    "/nix/store"
+                    "/nix"
                     "/usr"
                     "/lib"
                     "/lib64"
                   ];
+                  rw = [
+                    "$HOME/.cache/nix"
+                  ];
+                  ro = [
+                    "/proc/self"  # Required for GC to read thread stack info
+                    "/proc/stat"
+                    "/etc/nix"
+                    "$HOME/.local/share/nix"
+                  ];
                   env = [
                     "PATH"  # Required for programs to find executables
+                    "NIX_PATH"
+                    "NIX_SSL_CERT_FILE"
                   ];
                 })
 
