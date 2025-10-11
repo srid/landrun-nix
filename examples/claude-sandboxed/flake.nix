@@ -23,23 +23,23 @@
 
           landrunApps.default = {
             program = "${pkgs.claude-code}/bin/claude";
-          features = {
-            tty = true;
-            nix = true;
-            network = true;
-          };
-          cli = {
-            rw = [
-              "$HOME/.claude"
-              "$HOME/.claude.json"
-              "$HOME/.config/gcloud"
-            ];
-            rwx = [ "." ];
-            env = [
-              "HOME"  # Needed for gcloud and claude to resolve ~/ paths for config/state files
-            ];
+            features = {
+              tty = true;
+              nix = true;
+              network = true;
+            };
+            cli = {
+              rw = [
+                "$HOME/.claude"
+                "$HOME/.claude.json"
+                "$HOME/.config/gcloud"
+              ];
+              rwx = [ "." ];
+              env = [
+                "HOME" # Needed for gcloud and claude to resolve ~/ paths for config/state files
+              ];
+            };
           };
         };
-      };
     };
 }
