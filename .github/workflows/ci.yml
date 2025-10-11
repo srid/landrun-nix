@@ -21,7 +21,7 @@ jobs:
 
       - name: Test claude-sandboxed with --help
         run: |
-          mkdir ~/.claude
+          mkdir -p ~/.claude ~/.config/gcloud
           echo '{}' > ~/.claude.json
           cd examples/claude-sandboxed
           nix run --override-input landrun-nix ../.. . -- --help
