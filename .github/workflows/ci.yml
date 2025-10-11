@@ -1,0 +1,27 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build-example:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: nixbuild/nix-quick-install-action@v33
+
+      - name: Build claude-sandboxed example
+        run: |
+          cd examples/claude-sandboxed
+          nix build --override-input landrun-nix ../..
+
+      - name: Test claude-sandboxed with --help
+        run: |
+          mkdir ~/.claude
+          echo '{}' > ~/.claude.json
+          cd examples/claude-sandboxed
+          nix run --override-input landrun-nix ../.. . -- --help

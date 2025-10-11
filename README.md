@@ -40,7 +40,11 @@ Run with: `nix run .#my-app-sandboxed`
 
 ### Claude Code
 
-Sandbox [Claude Code](https://claude.ai/code) with access to project directory, config files, and network:
+Sandbox [Claude Code](https://claude.ai/code) with access to project directory, config files, and network.
+
+See [examples/claude-sandboxed](./examples/claude-sandboxed) for a complete working example.
+
+Try it: `nix run github:srid/landrun-nix?dir=examples/claude-sandboxed`
 
 ```nix
 landrunApps.claude-sandboxed = {
