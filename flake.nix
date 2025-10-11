@@ -3,5 +3,9 @@
 
   outputs = { ... }: {
     flakeModule = ./flake-module.nix;
+
+    landrunModules = {
+      gh = import ./modules/landrun/gh.nix;
+    };
   };
 }

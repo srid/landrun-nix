@@ -18,6 +18,9 @@
         };
 
         landrunApps.default = {
+          imports = [
+            landrun-nix.landrunModules.gh  # So, Claude can run `gh` CLI
+          ];
           program = "${pkgs.claude-code}/bin/claude";
           features = {
             tty = true;

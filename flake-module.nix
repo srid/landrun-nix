@@ -11,8 +11,9 @@ in
     perSystem = mkPerSystemOption
       ({ config, self', inputs', pkgs, system, ... }: {
         options.landrunApps = mkOption {
-          type = types.attrsOf (types.submodule ({ name, config, ... }: {
-            options = {
+          type = types.attrsOf (types.submoduleWith {
+            modules = [({ name, config, ... }: {
+              options = {
               program = mkOption {
                 type = types.str;
                 description = "The program to wrap with landrun (e.g., \${pkgs.foo}/bin/foo)";
@@ -43,6 +44,12 @@ in
                       type = types.bool;
                       default = true;
                       description = "Enable read-write access to /tmp for temporary files";
+                    };
+
+                    dbus = mkOption {
+                      type = types.bool;
+                      default = false;
+                      description = "Enable D-Bus access for keyring and Secret Service API";
                     };
                   };
                 };
@@ -190,6 +197,18 @@ in
                 (lib.mkIf config.features.tmp {
                   rw = [ "/tmp" ];
                 })
+
+                # D-Bus support (for keyring/Secret Service API)
+                (lib.mkIf config.features.dbus {
+                  rw = [
+                    "$HOME/.local/share/keyrings"  # Keyring storage
+                    "/run/user/$UID/bus"           # D-Bus socket
+                  ];
+                  env = [
+                    "DBUS_SESSION_BUS_ADDRESS"     # D-Bus session bus
+                    "XDG_RUNTIME_DIR"              # Runtime directory
+                  ];
+                })
               ];
 
               wrappedPackage =
@@ -220,7 +239,8 @@ in
                   meta = config.meta;
                 };
             };
-          }));
+          })];
+          });
           default = { };
           description = "Applications to wrap with landrun sandbox";
         };
