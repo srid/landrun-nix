@@ -36,6 +36,37 @@ In your `flake.nix`:
 
 Run with: `nix run .#my-app-sandboxed`
 
+## Reusable Modules
+
+landrun-nix provides reusable modules for common applications via `landrunModules.*`. These can be imported into your app configurations:
+
+```nix
+{
+  inputs.landrun-nix.url = "github:srid/landrun-nix";
+
+  outputs = { flake-parts, landrun-nix, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ landrun-nix.flakeModule ];
+
+      perSystem = { pkgs, ... }: {
+        landrunApps.my-app = {
+          imports = [
+            landrun-nix.landrunModules.gh  # Import GitHub CLI module
+          ];
+          program = "${pkgs.my-app}/bin/my-app";
+          features.network = true;
+        };
+      };
+    };
+}
+```
+
+### Available Modules
+
+| Module | Description |
+|--------|-------------|
+| `landrunModules.gh` | GitHub CLI (`gh`) configuration with D-Bus keyring support |
+
 ## Examples
 
 ### Claude Code
@@ -60,6 +91,7 @@ High-level feature flags automatically configure common sandboxing patterns:
 | `features.nix` | `true` | Nix store, system paths, PATH env var |
 | `features.network` | `false` | DNS resolution, SSL certificates, unrestricted network |
 | `features.tmp` | `true` | Read-write access to /tmp |
+| `features.dbus` | `false` | D-Bus session bus, keyring access for Secret Service API |
 
 ## CLI Options
 
