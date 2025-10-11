@@ -18,3 +18,8 @@ jobs:
         run: |
           cd examples/claude-sandboxed
           nix build --accept-flake-config --override-input landrun-nix ../..
+
+      - name: Test claude-sandboxed with --help
+        run: |
+          cd examples/claude-sandboxed
+          nix run --accept-flake-config --override-input landrun-nix ../.. -- --help
