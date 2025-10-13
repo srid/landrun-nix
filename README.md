@@ -68,6 +68,7 @@ landrun-nix provides reusable modules for common applications via `landrunModule
 | Module | Description |
 |--------|-------------|
 | `landrunModules.gh` | GitHub CLI (`gh`) configuration with D-Bus keyring support |
+| `landrunModules.git` | Git configuration with TTY support and repository access |
 
 ## Examples
 
