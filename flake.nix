@@ -14,6 +14,7 @@
     landrunModules = {
       gh = import ./modules/landrun/gh.nix;
       git = import ./modules/landrun/git.nix;
+      markitdown = import ./modules/landrun/markitdown.nix;
     };
   };
 }
