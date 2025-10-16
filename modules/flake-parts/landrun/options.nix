@@ -55,13 +55,13 @@ in
           rox = mkOption {
             type = types.listOf types.str;
             default = [ ];
-            description = "Paths with read-only + execute access";
+            description = "Paths with read-only + execute access. Non-existent paths are silently ignored.";
           };
 
           ro = mkOption {
             type = types.listOf types.str;
             default = [ ];
-            description = "Paths with read-only access";
+            description = "Paths with read-only access. Non-existent paths are silently ignored.";
           };
 
           rwx = mkOption {
