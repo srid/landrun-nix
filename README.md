@@ -69,6 +69,7 @@ landrun-nix provides reusable modules for common applications via `landrunModule
 |--------|-------------|
 | `landrunModules.gh` | GitHub CLI (`gh`) configuration with D-Bus keyring support |
 | `landrunModules.git` | Git configuration with TTY support and repository access |
+| `landrunModules.haskell` | Haskell tooling with Cabal configuration and state directory access |
 | `landrunModules.markitdown` | Markitdown configuration with `/proc/cpuinfo` access |
 
 ## Examples
