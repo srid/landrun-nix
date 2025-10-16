@@ -3,11 +3,17 @@
   config = {
     wrappedPackage =
       let
-        # Don't escape shell args - let them expand at runtime
-        landrunArgs = lib.concatStringsSep " \\\n      "
+        # Helper to generate conditional path argument
+        conditionalPathArg = flag: paths:
+          lib.concatMapStringsSep "\n" (p: ''
+            if [ -e "${p}" ]; then
+              args+=("${flag}" "${p}")
+            fi
+          '') paths;
+
+        # Static args (non-path related)
+        staticArgs = lib.concatStringsSep " \\\n      "
           ([ ]
-            ++ (map (p: "--rox \"${p}\"") config.cli.rox)
-            ++ (map (p: "--ro \"${p}\"") config.cli.ro)
             ++ (map (p: "--rwx \"${p}\"") config.cli.rwx)
             ++ (map (p: "--rw \"${p}\"") config.cli.rw)
             ++ (map (e: "--env ${e}") config.cli.env)
@@ -21,8 +27,17 @@
         name = name;
         runtimeInputs = [ pkgs.landrun ];
         text = ''
+          args=()
+
+          # Add conditional --rox paths
+          ${conditionalPathArg "--rox" config.cli.rox}
+
+          # Add conditional --ro paths
+          ${conditionalPathArg "--ro" config.cli.ro}
+
           exec landrun \
-            ${landrunArgs} \
+            "''${args[@]}" \
+            ${staticArgs} \
             ${config.program} "$@"
         '';
       }) // {
